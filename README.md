@@ -23,7 +23,11 @@ Thành tích, xu và giao diện sáng/tối lưu trong `localStorage`.
 ```
 index.html
 css/style.css          # design tokens (sáng/tối) + style từng trò
-js/core.js             # Hub: register(), store, record(), toast()
+js/config.js           # cấu hình Supabase cho chế độ online
+js/core.js             # Hub: register(), store, record(), toast(), sfx()
+js/net.js              # Hub.net: phòng chơi online
+js/sound.js            # Hub.sound: âm thanh Web Audio
+js/village.js          # bản đồ làng + Bà kể chuyện
 js/games/<id>.js       # mỗi trò tự đăng ký bằng Hub.register({...render(root, ctx)})
 js/data/lore.js        # dữ liệu góc đồng dao
 js/main.js             # router hash: #/  #/choi/<id>  #/dong-dao
@@ -34,8 +38,8 @@ js/main.js             # router hash: #/  #/choi/<id>  #/dong-dao
    `render` trả về hàm cleanup; dùng `ctx.alive()` để dừng animation khi người chơi rời trang.
 2. Thêm `<script>` vào `index.html` trước `js/main.js`.
 
-## Tách sang repo riêng
-Thư mục này tự chạy độc lập, không phụ thuộc gì bên ngoài:
-1. Tạo repo mới (ví dụ `san-dinh`), copy toàn bộ nội dung `folk-games/` vào thư mục gốc của repo.
-2. Vercel: Import repo, Framework = Other, không cần build command, output = thư mục gốc.
-3. (Tuỳ chọn) Tạo project Supabase riêng rồi thay URL và publishable key trong `js/config.js`. Realtime broadcast không cần tạo bảng.
+## Chạy & deploy
+- **Chạy local:** mở thẳng `index.html`. Chế độ online và PWA cần chạy qua http(s), ví dụ `python3 -m http.server`.
+- **Vercel:** Import repo, Framework = Other, không cần build command, output = thư mục gốc.
+- **Chơi online:** cấu hình Supabase trong `js/config.js` (URL + publishable key; Realtime broadcast không cần tạo bảng). Để trống `supabaseUrl` thì chế độ online sẽ ẩn.
+- **PWA:** khi thêm hoặc đổi file, cập nhật danh sách `PRECACHE` trong `sw.js` và tăng tên cache (`sandinh-v1` → `v2`…).
